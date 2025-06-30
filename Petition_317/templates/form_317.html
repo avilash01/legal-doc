@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Petition under Sec. 317 Cr.P.C.</title>
+</head>
+<body>
+    <h2>Petition Form - Sec. 317 Cr.P.C.</h2>
+    <form method="POST">
+        <label>Court:</label><input type="text" name="court" value="Metropolitan Magistrate"><br>
+        <label>Location:</label><input type="text" name="location" value="Saidapet, Chennai"><br>
+        <label>M.P. No:</label><input type="text" name="mp_no"><br>
+        <label>C.C. No:</label><input type="text" name="cc_no"><br>
+        <label>Petitioner Name:</label><input type="text" name="petitioner"><br>
+        <label>Respondent Name:</label><input type="text" name="respondent"><br>
+        <label>Reason for Absence:</label><br>
+        <textarea name="reason" rows="4" cols="50">medical emergency</textarea><br>
+        <label>Place:</label><input type="text" name="place" value="Chennai"><br>
+        <label>Date:</label><input type="text" name="date" value="{{ today }}"><br><br>
+        <input type="submit" value="Generate Petition Word File">
+    </form>
+</body>
+</html>

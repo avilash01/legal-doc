@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Affidavit Form</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        form { width: 600px; margin: auto; }
+        label { display: block; margin-top: 10px; }
+        input, textarea { width: 100%; padding: 8px; }
+        button { margin-top: 20px; padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <h2>Affidavit Generator Form</h2>
+    <form method="POST" action="/submit">
+        <label>Court Name</label>
+        <input type="text" name="court" required>
+
+        <label>Location</label>
+        <input type="text" name="location" required>
+
+        <label>I.A. No</label>
+        <input type="text" name="ia_no">
+
+        <label>OP/OS No</label>
+        <input type="text" name="op_no">
+
+        <label>Petitioner Name</label>
+        <input type="text" name="petitioner" required>
+
+        <label>Respondent Name</label>
+        <input type="text" name="respondent" required>
+
+        <label>Petitioner S/O or D/O</label>
+        <input type="text" name="petitioner_son_of">
+
+        <label>Occupation</label>
+        <input type="text" name="occupation">
+
+        <label>Age</label>
+        <input type="text" name="age">
+
+        <label>Address</label>
+        <textarea name="address"></textarea>
+
+        <label>Date (DD-MM-YYYY)</label>
+        <input type="text" name="date">
+
+        <label>Place</label>
+        <input type="text" name="place">
+
+        <button type="submit">Generate Document</button>
+    </form>
+</body>
+</html>
