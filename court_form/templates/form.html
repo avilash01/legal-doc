@@ -1,55 +1,117 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Affidavit Form</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        form { width: 600px; margin: auto; }
-        label { display: block; margin-top: 10px; }
-        input, textarea { width: 100%; padding: 8px; }
-        button { margin-top: 20px; padding: 10px 20px; }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #2e0f83, #1e0080);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        form label {
+            display: block;
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        form input,
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 5px;
+            background-color: #ffffff;
+            color: #000;
+            font-size: 15px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 25px;
+            width: 100%;
+            padding: 12px;
+            background-color: #3b3bc9;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2a2aaf;
+        }
     </style>
 </head>
 <body>
-    <h2>Affidavit Generator Form</h2>
-    <form method="POST" action="/submit">
-        <label>Court Name</label>
-        <input type="text" name="court" required>
+    <div class="container">
+        <h2>Affidavit Generator Form</h2>
+        <form method="POST" action="/submit">
+            <label>Court Name</label>
+            <input type="text" name="court" required>
 
-        <label>Location</label>
-        <input type="text" name="location" required>
+            <label>Location</label>
+            <input type="text" name="location" required>
 
-        <label>I.A. No</label>
-        <input type="text" name="ia_no">
+            <label>I.A. No</label>
+            <input type="text" name="ia_no">
 
-        <label>OP/OS No</label>
-        <input type="text" name="op_no">
+            <label>OP/OS No</label>
+            <input type="text" name="op_no">
 
-        <label>Petitioner Name</label>
-        <input type="text" name="petitioner" required>
+            <label>Petitioner Name</label>
+            <input type="text" name="petitioner" required>
 
-        <label>Respondent Name</label>
-        <input type="text" name="respondent" required>
+            <label>Respondent Name</label>
+            <input type="text" name="respondent" required>
 
-        <label>Petitioner S/O or D/O</label>
-        <input type="text" name="petitioner_son_of">
+            <label>Petitioner S/O or D/O</label>
+            <input type="text" name="petitioner_son_of">
 
-        <label>Occupation</label>
-        <input type="text" name="occupation">
+            <label>Occupation</label>
+            <input type="text" name="occupation">
 
-        <label>Age</label>
-        <input type="text" name="age">
+            <label>Age</label>
+            <input type="text" name="age">
 
-        <label>Address</label>
-        <textarea name="address"></textarea>
+            <label>Address</label>
+            <textarea name="address" rows="3"></textarea>
 
-        <label>Date (DD-MM-YYYY)</label>
-        <input type="text" name="date">
+            <label>Date (DD-MM-YYYY)</label>
+            <input type="text" name="date">
 
-        <label>Place</label>
-        <input type="text" name="place">
+            <label>Place</label>
+            <input type="text" name="place">
 
-        <button type="submit">Generate Document</button>
-    </form>
+            <button type="submit">Generate Document</button>
+        </form>
+    </div>
 </body>
 </html>
