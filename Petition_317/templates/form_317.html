@@ -1,22 +1,109 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Petition under Sec. 317 Cr.P.C.</title>
+  <meta charset="UTF-8">
+  <title>Petition under Sec. 317 Cr.P.C.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #2e006d, #4c00aa);
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+
+    form {
+      width: 100%;
+      max-width: 700px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 26px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: #000;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    input[type="submit"] {
+      margin-top: 30px;
+      width: 100%;
+      background-color: #ffffff;
+      color: #4c00aa;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
+
+  <form method="POST">
     <h2>Petition Form - Sec. 317 Cr.P.C.</h2>
-    <form method="POST">
-        <label>Court:</label><input type="text" name="court" value="Metropolitan Magistrate"><br>
-        <label>Location:</label><input type="text" name="location" value="Saidapet, Chennai"><br>
-        <label>M.P. No:</label><input type="text" name="mp_no"><br>
-        <label>C.C. No:</label><input type="text" name="cc_no"><br>
-        <label>Petitioner Name:</label><input type="text" name="petitioner"><br>
-        <label>Respondent Name:</label><input type="text" name="respondent"><br>
-        <label>Reason for Absence:</label><br>
-        <textarea name="reason" rows="4" cols="50">medical emergency</textarea><br>
-        <label>Place:</label><input type="text" name="place" value="Chennai"><br>
-        <label>Date:</label><input type="text" name="date" value="{{ today }}"><br><br>
-        <input type="submit" value="Generate Petition Word File">
-    </form>
+
+    <label for="court">Court:</label>
+    <input type="text" id="court" name="court" value="Metropolitan Magistrate">
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" value="Saidapet, Chennai">
+
+    <label for="mp_no">M.P. No:</label>
+    <input type="text" id="mp_no" name="mp_no">
+
+    <label for="cc_no">C.C. No:</label>
+    <input type="text" id="cc_no" name="cc_no">
+
+    <label for="petitioner">Petitioner Name:</label>
+    <input type="text" id="petitioner" name="petitioner">
+
+    <label for="respondent">Respondent Name:</label>
+    <input type="text" id="respondent" name="respondent">
+
+    <label for="reason">Reason for Absence:</label>
+    <textarea id="reason" name="reason" rows="4">medical emergency</textarea>
+
+    <label for="place">Place:</label>
+    <input type="text" id="place" name="place" value="Chennai">
+
+    <label for="date">Date:</label>
+    <input type="text" id="date" name="date" value="{{ today }}">
+
+    <input type="submit" value="Generate Petition Word File">
+  </form>
+
 </body>
 </html>
