@@ -1,48 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Personal Property Release</title>
-    <style>
-        body { font-family: Arial; max-width: 700px; margin: auto; padding: 20px; }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        input, textarea { width: 100%; padding: 8px; margin-top: 5px; }
-        button { margin-top: 20px; padding: 10px 20px; }
-    </style>
+  <meta charset="UTF-8">
+  <title>Personal Property Release</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #2e006d, #4c00aa);
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+
+    form {
+      width: 100%;
+      max-width: 700px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 26px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: #000;
+      font-size: 15px;
+    }
+
+    input:focus {
+      outline: 2px solid #ffffffaa;
+    }
+
+    button {
+      margin-top: 30px;
+      width: 100%;
+      background-color: #ffffff;
+      color: #4c00aa;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
+
+  <form method="POST" action="/submit-property-release">
     <h2>Generate Personal Property Release</h2>
-    <form method="POST" action="/submit-property-release">
-        <label>Day</label>
-        <input type="text" name="day" required>
 
-        <label>Month</label>
-        <input type="text" name="month" required>
+    <label for="day">Day</label>
+    <input type="text" id="day" name="day" required>
 
-        <label>Year</label>
-        <input type="text" name="year" required>
+    <label for="month">Month</label>
+    <input type="text" id="month" name="month" required>
 
-        <label>Grantor Name</label>
-        <input type="text" name="grantor" required>
+    <label for="year">Year</label>
+    <input type="text" id="year" name="year" required>
 
-        <label>Grantor Address</label>
-        <input type="text" name="grantor_address" required>
+    <label for="grantor">Grantor Name</label>
+    <input type="text" id="grantor" name="grantor" required>
 
-        <label>Grantee Name</label>
-        <input type="text" name="grantee" required>
+    <label for="grantor_address">Grantor Address</label>
+    <input type="text" id="grantor_address" name="grantor_address" required>
 
-        <label>Grantee Address</label>
-        <input type="text" name="grantee_address" required>
+    <label for="grantee">Grantee Name</label>
+    <input type="text" id="grantee" name="grantee" required>
 
-        <label>Property Description</label>
-        <input type="text" name="property" required>
+    <label for="grantee_address">Grantee Address</label>
+    <input type="text" id="grantee_address" name="grantee_address" required>
 
-        <label>Vacancy Date</label>
-        <input type="text" name="vacancy_date" required>
+    <label for="property">Property Description</label>
+    <input type="text" id="property" name="property" required>
 
-        <label>Witness Name</label>
-        <input type="text" name="witness" required>
+    <label for="vacancy_date">Vacancy Date</label>
+    <input type="text" id="vacancy_date" name="vacancy_date" required>
 
-        <button type="submit">Generate Document</button>
-    </form>
+    <label for="witness">Witness Name</label>
+    <input type="text" id="witness" name="witness" required>
+
+    <button type="submit">Generate Document</button>
+  </form>
+
 </body>
 </html>
