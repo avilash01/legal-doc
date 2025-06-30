@@ -1,25 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Petition under Sec 311 Cr.P.C.</title>
+  <meta charset="UTF-8">
+  <title>Petition under Sec. 311 Cr.P.C.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 20px;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #2e006d, #4c00aa);
+      color: white;
+      display: flex;
+      justify-content: center;
+    }
+
+    form {
+      width: 100%;
+      max-width: 750px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 26px;
+      font-weight: 600;
+      color: #ffffff;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border: none;
+      border-radius: 8px;
+      background-color: #ffffff;
+      color: #000;
+      font-size: 15px;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    input[type="submit"] {
+      margin-top: 30px;
+      width: 100%;
+      background-color: #ffffff;
+      color: #4c00aa;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
-    <h2>Petition Form - Sec. 311 Cr.P.C.</h2>
-    <form method="POST">
-        <label>Court Type:</label><input type="text" name="court" value="Metropolitan Magistrate"><br>
-        <label>Location:</label><input type="text" name="location" value="Saidapet, Chennai"><br>
-        <label>M.P. No:</label><input type="text" name="mp_no"><br>
-        <label>M.P. Year:</label><input type="text" name="mp_year"><br>
-        <label>C.C. No:</label><input type="text" name="cc_no"><br>
-        <label>C.C. Year:</label><input type="text" name="cc_year"><br>
-        <label>Petitioner Name(s):</label><input type="text" name="petitioner"><br>
-        <label>Respondent Name(s):</label><input type="text" name="respondent"><br>
-        <label>Reason (point 1):</label><br>
-        <textarea name="reason1" rows="4" cols="60">his counsel on record was unable to appear before this Hon’ble Court on ...</textarea><br>
-        <label>Reason (point 3):</label><br>
-        <textarea name="reason3" rows="4" cols="60">the balance of convenience lies in his favour, further to get rebuttal evidence from the PW -</textarea><br>
 
-        <input type="submit" value="Generate Word Document">
-    </form>
+  <form method="POST">
+    <h2>Petition Form - Sec. 311 Cr.P.C.</h2>
+
+    <label for="court">Court Type:</label>
+    <input type="text" id="court" name="court" value="Metropolitan Magistrate">
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" value="Saidapet, Chennai">
+
+    <label for="mp_no">M.P. No:</label>
+    <input type="text" id="mp_no" name="mp_no">
+
+    <label for="mp_year">M.P. Year:</label>
+    <input type="text" id="mp_year" name="mp_year">
+
+    <label for="cc_no">C.C. No:</label>
+    <input type="text" id="cc_no" name="cc_no">
+
+    <label for="cc_year">C.C. Year:</label>
+    <input type="text" id="cc_year" name="cc_year">
+
+    <label for="petitioner">Petitioner Name(s):</label>
+    <input type="text" id="petitioner" name="petitioner">
+
+    <label for="respondent">Respondent Name(s):</label>
+    <input type="text" id="respondent" name="respondent">
+
+    <label for="reason1">Reason (point 1):</label>
+    <textarea id="reason1" name="reason1" rows="4">his counsel on record was unable to appear before this Hon’ble Court on ...</textarea>
+
+    <label for="reason3">Reason (point 3):</label>
+    <textarea id="reason3" name="reason3" rows="4">the balance of convenience lies in his favour, further to get rebuttal evidence from the PW -</textarea>
+
+    <input type="submit" value="Generate Word Document">
+  </form>
+
 </body>
 </html>
