@@ -1,42 +1,86 @@
-from flask import Flask, render_template, request, send_file
-import sqlite3
-from generate_doc import create_affidavit_doc
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Affidavit & Petition</title>
+  <style>
+    body {
+      background-color: #3B0086;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
 
-app = Flask(__name__)
-DB_NAME = "court.db"
+    .form-container {
+      background-color: #3B0086;
+      padding: 40px;
+      border-radius: 12px;
+      width: 400px;
+      color: white;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    }
 
-# Create table on startup
-def init_db():
-    with sqlite3.connect(DB_NAME) as conn:
-        conn.execute('''CREATE TABLE IF NOT EXISTS affidavits (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            court TEXT, location TEXT, ia_no TEXT, op_no TEXT,
-            petitioner TEXT, respondent TEXT, petitioner_son_of TEXT,
-            occupation TEXT, age TEXT, address TEXT, date TEXT, place TEXT
-        )''')
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #ffffff;
+    }
 
-@app.route('/')
-def index():
-    return render_template('form.html')
+    label {
+      display: block;
+      margin-top: 12px;
+      font-weight: bold;
+      font-size: 14px;
+    }
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    data = {key: request.form[key] for key in [
-        'court', 'location', 'ia_no', 'op_no', 'petitioner',
-        'respondent', 'petitioner_son_of', 'occupation', 'age',
-        'address', 'date', 'place'
-    ]}
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: none;
+      font-size: 14px;
+      background-color: white;
+      color: black;
+    }
 
-    with sqlite3.connect(DB_NAME) as conn:
-        conn.execute('''INSERT INTO affidavits (
-            court, location, ia_no, op_no,
-            petitioner, respondent, petitioner_son_of,
-            occupation, age, address, date, place
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''', tuple(data.values()))
+    button {
+      margin-top: 25px;
+      padding: 12px;
+      width: 100%;
+      background-color: white;
+      color: #3B0086;
+      border: none;
+      font-weight: bold;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-    output_path = create_affidavit_doc(data)
-    return send_file(output_path, as_attachment=True)
-
-if __name__ == '__main__':
-    init_db()
-    app.run(debug=True)
+    button:hover {
+      background-color: #e6dbff;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Affidavit & Petition</h2>
+    <form method="POST">
+      <label>Petitioner Name:</label><input type="text" name="petitioner" required>
+      <label>Respondent Name:</label><input type="text" name="respondent" required>
+      <label>I.A. Number:</label><input type="text" name="ia_no" required>
+      <label>OP/OS Number:</label><input type="text" name="op_no" required>
+      <label>Petitioner Age:</label><input type="text" name="age" required>
+      <label>Occupation:</label><input type="text" name="occupation" required>
+      <label>Father's Name:</label><input type="text" name="father_name" required>
+      <label>Address:</label><input type="text" name="address" required>
+      <label>Filed On (DD-MM-YYYY):</label><input type="text" name="filed_on" required>
+      <button type="submit">Generate Document</button>
+    </form>
+  </div>
+</body>
+</html>
