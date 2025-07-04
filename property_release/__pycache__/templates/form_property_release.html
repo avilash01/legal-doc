@@ -1,118 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Generate Personal Property Release</title>
-  <style>
-    body {
-      background-color: #360089; /* Your original purple */
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      color: white;
-    }
+from flask import Flask, render_template, request, send_file
+from flask_sqlalchemy import SQLAlchemy
+from docx import Document
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.shared import RGBColor
+from io import BytesIO
+import os
 
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///submissions.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-    form {
-      background-color: #360089;
-      padding: 30px;
-      border-radius: 12px;
-      width: 400px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-    }
+# ---------- Database Model ----------
+class Submission(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    day = db.Column(db.String(10))
+    month = db.Column(db.String(20))
+    year = db.Column(db.String(10))
+    grantor_name = db.Column(db.String(100))
+    grantor_address = db.Column(db.String(200))
+    grantee_name = db.Column(db.String(100))
+    grantee_address = db.Column(db.String(200))
+    vacancy_date = db.Column(db.String(20))
+    property_description = db.Column(db.Text)
+    witness_name = db.Column(db.String(100))
 
-    h2 {
-      text-align: center;
-      color: white;
-      margin-bottom: 20px;
-      font-size: 20px;
-      font-weight: bold;
-    }
+# Create database tables
+with app.app_context():
+    db.create_all()
 
-    label {
-      display: block;
-      margin-top: 15px;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
+# ---------- Main Route ----------
+@app.route('/', methods=['GET', 'POST'])
+def release_form():
+    if request.method == 'POST':
+        data = request.form.to_dict()
 
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      background-color: white;
-      color: black;
-      font-size: 14px;
-    }
+        # Save to database
+        submission = Submission(
+            day=data["day"],
+            month=data["month"],
+            year=data["year"],
+            grantor_name=data["grantor_name"],
+            grantor_address=data["grantor_address"],
+            grantee_name=data["grantee_name"],
+            grantee_address=data["grantee_address"],
+            vacancy_date=data["vacancy_date"],
+            property_description=data["property_description"],
+            witness_name=data["witness_name"]
+        )
+        db.session.add(submission)
+        db.session.commit()
 
-    textarea {
-      resize: vertical;
-    }
+        # Create a Word document
+        doc = Document()
 
-    button {
-      margin-top: 25px;
-      width: 100%;
-      padding: 12px;
-      background-color: white;
-      color: #360089;
-      font-weight: bold;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-    }
+        heading = doc.add_paragraph()
+        run = heading.add_run("PERSONAL PROPERTY RELEASE")
+        run.bold = True
+        run.font.color.rgb = RGBColor(0, 0, 0)
+        heading.alignment = WD_ALIGN_PARAGRAPH.CENTER
 
-    button:hover {
-      background-color: #4b00b5;
-      color: white;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <form method="POST">
-      <h2>Generate Personal Property Release</h2>
+        doc.add_paragraph(
+            f'THIS PERSONAL PROPERTY RELEASE, made this {data["day"]} day of {data["month"]}, {data["year"]}, '
+            f'between {data["grantor_name"]} ("Grantor(s)") who currently resides at {data["grantor_address"]} '
+            f'and {data["grantee_name"]} ("Grantee") whose address is {data["grantee_address"]}.'
+        )
 
-      <label for="day">Day</label>
-      <input type="text" id="day" name="day" required>
+        doc.add_paragraph(
+            f'WHEREAS, Grantor agrees to vacate said Property no later than {data["vacancy_date"]} ("Vacancy Date") '
+            f'and to leave the property in broom-swept condition free of interior and exterior trash, debris or damage '
+            f'and to remove all personal property. Grantor agrees that Grantee is authorized to access and dispose of any '
+            f'personal property remaining after the Vacancy Date. This Release shall be enforceable by Grantee and its '
+            f'successors, agents, or assigns. This document may be relied upon as proof of Grantor’s consent for such removal or disposal.'
+        )
 
-      <label for="month">Month</label>
-      <input type="text" id="month" name="month" required>
+        doc.add_paragraph(
+            f'In consideration of Grantee’s acceptance of a mortgage release/deed-in-lieu of foreclosure of the Property, '
+            f'Grantor(s) hereby releases and holds harmless Grantee and its servicers, representatives, agents, attorneys, '
+            f'Officers, Directors, employees, successors and assigns from any claim or liability, loss, cost, or expense, '
+            f'including reasonable attorney’s fees, for any and all personal property left in the Property after the agreed upon Vacancy Date.'
+        )
 
-      <label for="year">Year</label>
-      <input type="text" id="year" name="year" required>
+        doc.add_paragraph(
+            f'THE UNDERSIGNED GRANTOR(S) HAS READ THE FOREGOING PERSONAL PROPERTY RELEASE AND UNDERSTANDS IT, AND HAS HAD '
+            f'THE OPPORTUNITY TO CONSULT WITH COUNSEL AND AGREES THAT ALL DOUBTS AND AMBIGUITIES IN CONNECTION WITH THIS '
+            f'PERSONAL PROPERTY RELEASE SHALL BE CONSTRUED IN FAVOR OF THE RELEASED PARTY.'
+        )
 
-      <label for="grantor_name">Grantor Name</label>
-      <input type="text" id="grantor_name" name="grantor_name" required>
+        doc.add_paragraph("\n\nBy:\n\nGrantor")
+        doc.add_paragraph("\n\nBy:\n\nGrantee")
+        doc.add_paragraph("Witness:")
+        doc.add_paragraph("Witness")  # You preferred this text
 
-      <label for="grantor_address">Grantor Address</label>
-      <input type="text" id="grantor_address" name="grantor_address" required>
+        # Send Word file
+        buffer = BytesIO()
+        doc.save(buffer)
+        buffer.seek(0)
 
-      <label for="grantee_name">Grantee Name</label>
-      <input type="text" id="grantee_name" name="grantee_name" required>
+        return send_file(buffer, as_attachment=True, download_name="personal_property_release.docx")
 
-      <label for="grantee_address">Grantee Address</label>
-      <input type="text" id="grantee_address" name="grantee_address" required>
+    return render_template("form_property_release.html")
 
-      <label for="vacancy_date">Vacancy Date (YYYY-MM-DD)</label>
-      <input type="text" id="vacancy_date" name="vacancy_date" required>
+# ---------- View Submissions (Optional Admin Route) ----------
+@app.route('/submissions')
+def view_submissions():
+    all_data = Submission.query.all()
+    return render_template('submissions.html', submissions=all_data)
 
-      <label for="property_description">Property Description</label>
-      <textarea id="property_description" name="property_description" rows="3" required></textarea>
-
-      <label for="witness_name">Witness Name</label>
-      <input type="text" id="witness_name" name="witness_name" required>
-
-      <button type="submit">Generate Document</button>
-    </form>
-  </div>
-</body>
-</html>
+if __name__ == "__main__":
+    app.run(debug=True)
