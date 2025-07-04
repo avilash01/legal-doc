@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Past Petitions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #2e006d, #4c00aa);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .petition-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .petition-item {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            margin-bottom: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .petition-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .petition-item strong {
+            color: #e0e0e0;
+        }
+
+        .petition-item p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .download-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #ffffff;
+            color: #4c00aa;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .download-link:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 20px;
+            border: 2px solid #ffffff;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h2 {
+                font-size: 24px;
+            }
+            .petition-item {
+                padding: 15px;
+            }
+            .petition-item p {
+                font-size: 14px;
+            }
+            .download-link, .back-link {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Past Petitions</h2>
+
+        {% if petitions %}
+            <ul class="petition-list">
+                {% for petition in petitions %}
+                    <li class="petition-item">
+                        <p><strong>Petitioner:</strong> {{ petition.petitioner }}</p>
+                        <p><strong>Respondent:</strong> {{ petition.respondent }}</p>
+                        <p><strong>Court:</strong> {{ petition.court }} ({{ petition.location }})</p>
+                        <p><strong>M.P. No:</strong> {{ petition.mp_no }}</p>
+                        <p><strong>C.C. No:</strong> {{ petition.cc_no }}</p>
+                        <p><strong>Date:</strong> {{ petition.date }}</p>
+                        <p><strong>Generated On:</strong> {{ petition.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</p>
+                        <a href="{{ url_for('download_file', filename=petition.generated_filename) }}" class="download-link">Download Word File</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="text-align: center; font-size: 1.1em;">No petitions generated yet.</p>
+        {% endif %}
+
+        <a href="{{ url_for('form_317') }}" class="back-link">Back to Form</a>
+    </div>
+</body>
+</html>
