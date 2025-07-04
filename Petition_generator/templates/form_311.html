@@ -1,153 +1,115 @@
-from flask import Flask, render_template, request, send_file
-from docx import Document
-from docx.shared import Inches
-from docx.enum.text import WD_ALIGN_PARAGRAPH
-import io
-import json
-import uuid
-from datetime import datetime
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petition Form - Sec. 317 Cr.P.C.</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #6a0dad; /* Deep purple background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .form-container {
+            background-color: #330066; /* Darker purple for the form */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
+        }
+        .form-title {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .form-label {
+            color: #e0b0ff; /* Lighter purple for labels */
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .form-input {
+            background-color: #4a0080; /* Even darker purple for input fields */
+            color: #ffffff;
+            border: 1px solid #7b2cbf; /* Purple border */
+            border-radius: 8px;
+            padding: 10px 15px;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #c77dff; /* Brighter purple on focus */
+            box-shadow: 0 0 0 3px rgba(199, 125, 255, 0.5);
+        }
+        .form-button {
+            background-color: #8a2be2; /* Blue-violet button */
+            color: #ffffff;
+            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .form-button:hover {
+            background-color: #9932cc; /* Darker blue-violet on hover */
+            transform: translateY(-2px);
+        }
+        .form-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 class="form-title">Petition Form - Sec. 317 Cr.P.C.</h1>
+        <form action="/submit" method="post">
+            <label for="court" class="form-label">Court:</label>
+            <input type="text" id="court" name="court" class="form-input" value="Metropolitan Magistrate" required>
 
-import firebase_admin
-from firebase_admin import credentials, firestore
+            <label for="location" class="form-label">Location:</label>
+            <input type="text" id="location" name="location" class="form-input" value="Saidapet, Chennai" required>
 
-app = Flask(__name__)
+            <label for="mp_no" class="form-label">M.P. No.:</label>
+            <input type="text" id="mp_no" name="mp_no" class="form-input" value="5687" required>
 
-appId = globals().get('__app_id', 'default-app-id')
-firebase_config_str = globals().get('__firebase_config', '{}')
-initialAuthToken = globals().get('__initial_auth_token', None)
+            <label for="cc_no" class="form-label">C.C. No.:</label>
+            <input type="text" id="cc_no" name="cc_no" class="form-input" value="400" required>
 
-firebaseConfig = {}
-try:
-    if firebase_config_str:
-        firebaseConfig = json.loads(firebase_config_str)
-except json.JSONDecodeError:
-    firebaseConfig = {}
+            <label for="petitioner_name" class="form-label">Petitioner Name:</label>
+            <input type="text" id="petitioner_name" name="petitioner_name" class="form-input" value="Priya Sharma" required>
 
-db = None
-try:
-    if firebaseConfig and firebaseConfig.get("type") == "service_account":
-        if not firebase_admin._apps:
-            cred = credentials.Certificate(firebaseConfig)
-            firebase_admin.initialize_app(cred)
-        db = firestore.client()
-except Exception as e:
-    pass
+            <label for="respondent_name" class="form-label">Respondent Name:</label>
+            <input type="text" id="respondent_name" name="respondent_name" class="form-input" value="Rohan Mehta" required>
 
-USER_ID = "demo_user_id"
+            <label for="reason_for_absence" class="form-label">Reason for Absence:</label>
+            <input type="text" id="reason_for_absence" name="reason_for_absence" class="form-input" value="Medical emergency" required>
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+            <label for="place" class="form-label">Place:</label>
+            <input type="text" id="place" name="place" class="form-input" value="Chennai" required>
 
-@app.route('/submit', methods=['POST'])
-def submit():
-    court = request.form['court']
-    location = request.form['location']
-    mp_no = request.form['mp_no']
-    cc_no = request.form['cc_no']
-    petitioner_name = request.form['petitioner_name']
-    respondent_name = request.form['respondent_name']
-    reason_for_absence = request.form['reason_for_absence']
-    place = request.form['place']
-    date = request.form['date']
+            <label for="date" class="form-label">Date:</label>
+            <input type="date" id="date" name="date" class="form-input" value="2025-07-04" required>
 
-    petition_data = {
-        "court": court,
-        "location": location,
-        "mp_no": mp_no,
-        "cc_no": cc_no,
-        "petitioner_name": petitioner_name,
-        "respondent_name": respondent_name,
-        "reason_for_absence": reason_for_absence,
-        "place": place,
-        "date": date,
-        "timestamp": firestore.SERVER_TIMESTAMP
-    }
-
-    if db:
-        try:
-            doc_ref = db.collection(f'artifacts/{appId}/users/{USER_ID}/petitions').add(petition_data)
-        except Exception:
-            pass
-
-    document = Document()
-
-    p = document.add_paragraph()
-    run = p.add_run(f"IN THE COURT OF {court.upper()}")
-    run.bold = True
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    p = document.add_paragraph(f"{location.upper()}")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    p = document.add_paragraph(f"M. P. No.    {mp_no} of \t {date.split('-')[0]}")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    p = document.add_paragraph(f"In")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    p = document.add_paragraph(f"C. C. No.   {cc_no}  of {date.split('-')[0]}")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    document.add_paragraph("")
-
-    p = document.add_paragraph("BETWEEN:")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    p = document.add_paragraph(f"{petitioner_name.ljust(80)} … PETITIONERS/ACCUSED.")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    p = document.add_paragraph(f"{' ' * 70}VS")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    p = document.add_paragraph(f"{respondent_name.ljust(80)} ... RESPONDENT/COMPLAINANT.")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    document.add_paragraph("")
-
-    p = document.add_paragraph("PETITION FILED UNDER SEC. 311 Cr.P.C.")
-    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-
-    document.add_paragraph(f"The petitioner above named states as follows:")
-    document.add_paragraph(f"1. The petitioner states that his counsel on record was unable to appear before this Hon’ble Court on {date}.")
-    document.add_paragraph("2. The petitioner states that it is neither willful nor wanton but due to the reason stated above.")
-    document.add_paragraph("3. The petitioner states that the balance of convenience lies in his favour, further to get rebuttal evidence from the PW.")
-    document.add_paragraph("In these circumstances it is therefore prayed that this Hon’ble Court may be pleased to permit the petitioner to reopen and recall the PW – and cross examine in the interest of justice and thus render justice.")
-    document.add_paragraph("")
-
-    p = document.add_paragraph(f"Signature of Counsel & Deponent ")
-    p.alignment = WD_ALIGN_PARAGRAPH.RIGHT
-
-    file_stream = io.BytesIO()
-    document.save(file_stream)
-    file_stream.seek(0)
-
-    return send_file(
-        file_stream,
-        mimetype='application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        as_attachment=True,
-        download_name=f'petition_{petitioner_name.replace(" ", "_")}_{date}.docx'
-    )
-
-@app.route('/view_petitions')
-def view_petitions():
-    petitions = []
-    if db:
-        try:
-            petitions_ref = db.collection(f'artifacts/{appId}/users/{USER_ID}/petitions')
-            docs = petitions_ref.stream()
-            for doc in docs:
-                petition_data = doc.to_dict()
-                petition_data['id'] = doc.id
-                if 'timestamp' in petition_data and hasattr(petition_data['timestamp'], 'strftime'):
-                    petition_data['timestamp'] = petition_data['timestamp'].strftime('%Y-%m-%d %H:%M:%S')
-                elif 'timestamp' in petition_data:
-                    petition_data['timestamp'] = str(petition_data['timestamp'])
-                petitions.append(petition_data)
-            petitions.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
-        except Exception:
-            pass
-    return render_template('past_petitions.html', petitions=petitions, user_id=USER_ID)
-
-if __name__ == '__main__':
-    app.run(debug=True)
+            <button type="submit" class="form-button">Generate Petition Word File</button>
+            <button type="button" class="form-button" onclick="window.location.href='/view_petitions'">View Past Petitions</button>
+        </form>
+    </div>
+</body>
+</html>
