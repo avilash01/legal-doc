@@ -1,152 +1,127 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Petition under Sec. 317 Cr.P.C.</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 40px 20px;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #2e006d, #4c00aa);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start; /* Align to the top */
-      min-height: 100vh; /* Ensure it takes full viewport height */
-    }
-
-    .container {
-      width: 100%;
-      max-width: 700px;
-      background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent background */
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    }
-
-    h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      font-size: 26px;
-      font-weight: 600;
-      color: #ffffff;
-    }
-
-    label {
-      display: block;
-      margin-top: 20px;
-      font-weight: 600;
-      font-size: 14px;
-      color: #e0e0e0;
-    }
-
-    input[type="text"], textarea {
-      width: calc(100% - 24px); /* Account for padding */
-      padding: 12px;
-      margin-top: 6px;
-      border: none;
-      border-radius: 8px;
-      background-color: #ffffff;
-      color: #333; /* Darker text for readability */
-      font-size: 15px;
-      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
-    input[type="submit"], .button-link {
-      margin-top: 30px;
-      width: 100%;
-      background-color: #ffffff;
-      color: #4c00aa;
-      padding: 14px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      text-align: center;
-      text-decoration: none; /* For button-link */
-      display: block; /* For button-link */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    input[type="submit"]:hover, .button-link:hover {
-      background-color: #f0f0f0;
-      transform: translateY(-2px);
-    }
-
-    input[type="submit"]:active, .button-link:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petition Form - Sec. 317 Cr.P.C.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
         body {
-            padding: 20px 10px;
-        }
-        .container {
+            font-family: "Inter", sans-serif;
+            background: linear-gradient(135deg, #2e006d, #4c00aa);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
             padding: 20px;
+            box-sizing: border-box;
         }
-        h2 {
-            font-size: 22px;
+        .form-container {
+            background: linear-gradient(135deg, #3a008c, #5c00d4);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 500px;
         }
-        input[type="text"], textarea {
-            padding: 10px;
+        .form-title {
+            color: #ffffff;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 25px;
         }
-        input[type="submit"], .button-link {
-            padding: 12px;
-            font-size: 15px;
+        .form-label {
+            color: #ffffff;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            display: block;
         }
-    }
-  </style>
+        .form-input {
+            background-color: #ffffff;
+            color: #333333;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 15px;
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .form-input:focus {
+            outline: none;
+            border: 1px solid #8a2be2;
+            box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3), inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        input[type="date"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(30%) sepia(90%) saturate(2000%) hue-rotate(240deg) brightness(80%);
+            cursor: pointer;
+        }
+        input[type="date"]::-moz-calendar-picker-indicator {
+            filter: invert(30%) sepia(90%) saturate(2000%) hue-rotate(240deg) brightness(80%);
+            cursor: pointer;
+        }
+        .form-button {
+            background-color: #5c00d4;
+            color: #ffffff;
+            font-weight: bold;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .form-button:hover {
+            background-color: #4a00b7;
+            transform: translateY(-2px);
+        }
+        .form-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </head>
 <body>
+    <div class="form-container">
+        <h1 class="form-title">Petition Form - Sec. 317 Cr.P.C.</h1>
+        <form action="/submit" method="post">
+            <label for="court" class="form-label">Court:</label>
+            <input type="text" id="court" name="court" class="form-input" value="Metropolitan Magistrate" required>
 
-  <div class="container">
-    <h2>Petition Form - Sec. 317 Cr.P.C.</h2>
+            <label for="location" class="form-label">Location:</label>
+            <input type="text" id="location" name="location" class="form-input" value="Saidapet, Chennai" required>
 
-    <form method="POST">
-      <label for="court">Court:</label>
-      <input type="text" id="court" name="court" value="Metropolitan Magistrate" required>
+            <label for="mp_no" class="form-label">M.P. No.:</label>
+            <input type="text" id="mp_no" name="mp_no" class="form-input" value="5687" required>
 
-      <label for="location">Location:</label>
-      <input type="text" id="location" name="location" value="Saidapet, Chennai" required>
+            <label for="cc_no" class="form-label">C.C. No.:</label>
+            <input type="text" id="cc_no" name="cc_no" class="form-input" value="400" required>
 
-      <label for="mp_no">M.P. No:</label>
-      <input type="text" id="mp_no" name="mp_no" placeholder="e.g., 5687" required>
+            <label for="petitioner_name" class="form-label">Petitioner Name:</label>
+            <input type="text" id="petitioner_name" name="petitioner_name" class="form-input" value="Priya Sharma" required>
 
-      <label for="cc_no">C.C. No:</label>
-      <input type="text" id="cc_no" name="cc_no" required>
+            <label for="respondent_name" class="form-label">Respondent Name:</label>
+            <input type="text" id="respondent_name" name="respondent_name" class="form-input" value="Rohan Mehta" required>
 
-      <label for="petitioner">Petitioner Name:</label>
-      <input type="text" id="petitioner" name="petitioner" required>
+            <label for="reason_for_absence" class="form-label">Reason for Absence:</label>
+            <input type="text" id="reason_for_absence" name="reason_for_absence" class="form-input" value="Medical emergency" required>
 
-      <label for="respondent">Respondent Name:</label>
-      <input type="text" id="respondent" name="respondent" required>
+            <label for="place" class="form-label">Place:</label>
+            <input type="text" id="place" name="place" class="form-input" value="Chennai" required>
 
-      <label for="reason">Reason for Absence:</label>
-      <textarea id="reason" name="reason" rows="4" required>medical emergency</textarea>
+            <label for="date" class="form-label">Date:</label>
+            <input type="date" id="date" name="date" class="form-input" value="2025-07-04" required>
 
-      <label for="place">Place:</label>
-      <input type="text" id="place" name="place" value="Chennai" required>
-
-      <label for="date">Date:</label>
-      <input type="text" id="date" name="date" value="{{ today }}" required>
-
-      <input type="submit" value="Generate Petition Word File">
-    </form>
-
-    <a href="{{ url_for('view_petitions') }}" class="button-link">View Past Petitions</a>
-  </div>
-
+            <button type="submit" class="form-button">Generate Petition Word File</button>
+            <button type="button" class="form-button" onclick="window.location.href='/view_petitions'">View Past Petitions</button>
+        </form>
+    </div>
 </body>
 </html>
