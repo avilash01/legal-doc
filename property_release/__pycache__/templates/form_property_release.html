@@ -2,111 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Personal Property Release</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <title>Generate Personal Property Release</title>
   <style>
     body {
+      background-color: #360089; /* Your original purple */
+      font-family: Arial, sans-serif;
       margin: 0;
-      padding: 40px 20px;
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #2e006d, #4c00aa);
+      padding: 0;
       color: white;
+    }
+
+    .container {
       display: flex;
       justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
     form {
-      width: 100%;
-      max-width: 700px;
+      background-color: #360089;
+      padding: 30px;
+      border-radius: 12px;
+      width: 400px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
     }
 
     h2 {
       text-align: center;
-      margin-bottom: 30px;
-      font-size: 26px;
-      font-weight: 600;
-      color: #ffffff;
+      color: white;
+      margin-bottom: 20px;
+      font-size: 20px;
+      font-weight: bold;
     }
 
     label {
       display: block;
-      margin-top: 20px;
-      font-weight: 600;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background-color: white;
+      color: black;
       font-size: 14px;
     }
 
-    input {
-      width: 100%;
-      padding: 12px;
-      margin-top: 6px;
-      border: none;
-      border-radius: 8px;
-      background-color: #ffffff;
-      color: #000;
-      font-size: 15px;
-    }
-
-    input:focus {
-      outline: 2px solid #ffffffaa;
+    textarea {
+      resize: vertical;
     }
 
     button {
-      margin-top: 30px;
+      margin-top: 25px;
       width: 100%;
-      background-color: #ffffff;
-      color: #4c00aa;
-      padding: 14px;
+      padding: 12px;
+      background-color: white;
+      color: #360089;
+      font-weight: bold;
       font-size: 16px;
-      font-weight: 600;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: background-color 0.3s, color 0.3s;
     }
 
     button:hover {
-      background-color: #f0f0f0;
+      background-color: #4b00b5;
+      color: white;
     }
   </style>
 </head>
 <body>
+  <div class="container">
+    <form method="POST">
+      <h2>Generate Personal Property Release</h2>
 
-  <form method="POST" action="/submit-property-release">
-    <h2>Generate Personal Property Release</h2>
+      <label for="day">Day</label>
+      <input type="text" id="day" name="day" required>
 
-    <label for="day">Day</label>
-    <input type="text" id="day" name="day" required>
+      <label for="month">Month</label>
+      <input type="text" id="month" name="month" required>
 
-    <label for="month">Month</label>
-    <input type="text" id="month" name="month" required>
+      <label for="year">Year</label>
+      <input type="text" id="year" name="year" required>
 
-    <label for="year">Year</label>
-    <input type="text" id="year" name="year" required>
+      <label for="grantor_name">Grantor Name</label>
+      <input type="text" id="grantor_name" name="grantor_name" required>
 
-    <label for="grantor">Grantor Name</label>
-    <input type="text" id="grantor" name="grantor" required>
+      <label for="grantor_address">Grantor Address</label>
+      <input type="text" id="grantor_address" name="grantor_address" required>
 
-    <label for="grantor_address">Grantor Address</label>
-    <input type="text" id="grantor_address" name="grantor_address" required>
+      <label for="grantee_name">Grantee Name</label>
+      <input type="text" id="grantee_name" name="grantee_name" required>
 
-    <label for="grantee">Grantee Name</label>
-    <input type="text" id="grantee" name="grantee" required>
+      <label for="grantee_address">Grantee Address</label>
+      <input type="text" id="grantee_address" name="grantee_address" required>
 
-    <label for="grantee_address">Grantee Address</label>
-    <input type="text" id="grantee_address" name="grantee_address" required>
+      <label for="vacancy_date">Vacancy Date (YYYY-MM-DD)</label>
+      <input type="text" id="vacancy_date" name="vacancy_date" required>
 
-    <label for="property">Property Description</label>
-    <input type="text" id="property" name="property" required>
+      <label for="property_description">Property Description</label>
+      <textarea id="property_description" name="property_description" rows="3" required></textarea>
 
-    <label for="vacancy_date">Vacancy Date</label>
-    <input type="text" id="vacancy_date" name="vacancy_date" required>
+      <label for="witness_name">Witness Name</label>
+      <input type="text" id="witness_name" name="witness_name" required>
 
-    <label for="witness">Witness Name</label>
-    <input type="text" id="witness" name="witness" required>
-
-    <button type="submit">Generate Document</button>
-  </form>
-
+      <button type="submit">Generate Document</button>
+    </form>
+  </div>
 </body>
 </html>
